@@ -17,7 +17,16 @@ public class TransferRate {
         return kiloBytes * 1024;
 
     }
-
+    public double totalDataAfterOverhead() {  //this method is used to take total value of data to be transferred and adds the overhead value to it.
+        double x= totalData + ((overHeadValue / 100) * totalData);
+        return fromGigaBytesToBytes(fromBytesToBits(x));
+    }
+public double kbsToBits(double kbs){
+        return  kbs*1000;
+}
+public double mbsToBits(double mbs){
+        return mbs*1000000;
+}
     public double fromMegaBytesToBytes(double megaBytes) {
         return megaBytes * 1048576;
     }
@@ -26,10 +35,6 @@ public class TransferRate {
         return gigaBytes * 1073741824;
     }
 
-    public double totalDataAfterOverhead() {  //this method is used to take total value of data to be transferred and adds the overhead value to it.
-        double x= totalData + ((overHeadValue / 100) * totalData);
-        return fromGigaBytesToBytes(fromBytesToBits(x));
-    }
 
     public double fedEx(double hours) {
         return fromBytesToBits(fromGigaBytesToBytes(totalData)) / (hours * 60 * 60);
@@ -43,24 +48,24 @@ public class TransferRate {
         return totalDataAfterOverhead() / worstTransferRate;
     }
 
-    public double v90(double v90TransferRate) { //transfer rate of v90 is given in kbps
-        return totalDataAfterOverhead() / fromBytesToBits(fromKiloBytesToBytes(v90TransferRate));
+    public double v90(double v90TransferRate) { //transfer rate of v90 is given in kbs
+        return totalDataAfterOverhead() / kbsToBits(v90TransferRate);
     }
 
     public double t1Line(double t1LineTransferRate) { //transfer rate of t1 line is given in mbps
-        return totalDataAfterOverhead() / fromBytesToBits(fromMegaBytesToBytes(t1LineTransferRate));
+        return totalDataAfterOverhead() / mbsToBits(t1LineTransferRate);
     }
 
-    public double fiberLine(double fiberLineRate) {//transfer rate of fiber line is given in mbps
-        return totalDataAfterOverhead() / fromBytesToBits(fromMegaBytesToBytes(fiberLineRate));
+    public double ocTwelveFiberLine(double fiberLineRate) {//transfer rate of fiber line is given in mbps
+        return totalDataAfterOverhead() / mbsToBits(fiberLineRate);
     }
 
     public double ethernet(double ethernetRate) {//transfer rate of ethernet is given in mbps
-        return totalDataAfterOverhead() / fromBytesToBits(fromMegaBytesToBytes(ethernetRate));
+        return totalDataAfterOverhead() / mbsToBits(ethernetRate);
     }
 
     public double eightOtwoDotElevenN(double eightOtwoDotElevenNRate) {//transfer rate of eightOtwoDotElevenNRate is given in mbps
-        return totalDataAfterOverhead() / fromBytesToBits(fromMegaBytesToBytes(eightOtwoDotElevenNRate));
+        return totalDataAfterOverhead() / mbsToBits(eightOtwoDotElevenNRate);
     }
 
     public double threeG(double threeGRate) {//transfer rate of threeGRate is given in mbps
@@ -72,7 +77,7 @@ public class TransferRate {
     }
 
     public double newHorizon(double newHorizonRate) { //transfer rate for new horizon probe is 1000bps and it takes 4 hours for the signals to reach to Earth
-        return (totalDataAfterOverhead() / newHorizonRate) + (4 * 60 * 60);
+        return ((totalDataAfterOverhead() / newHorizonRate) + (4 * 60 * 60));
     }
 
     public void timeInDayHourMinSecFormat(double seconds) {

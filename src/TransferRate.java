@@ -27,10 +27,8 @@ public class TransferRate {
     }
 
     public double totalDataAfterOverhead() {  //this method is used to take total value of data to be transferred and adds the overhead value to it.
-        totalData = fromBytesToBits(fromGigaBytesToBytes(totalData));
-        return totalData + ((overHeadValue / 100) * totalData);
-
-
+        double x= totalData + ((overHeadValue / 100) * totalData);
+        return fromGigaBytesToBytes(fromBytesToBits(x));
     }
 
     public double fedEx(double hours) {
